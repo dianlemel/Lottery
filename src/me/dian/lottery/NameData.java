@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,7 +39,7 @@ public class NameData {
             select.add(names.remove(0));
         }
         if (!select.isEmpty()) {
-            historys.add(new History(names));
+            historys.add(new History(select));
             save();
         }
         return select;
@@ -60,7 +61,7 @@ public class NameData {
         Bukkit.getScheduler().runTaskLaterAsynchronously(Lottery.getPlugin(), () -> {
             try {
                 Files.deleteIfExists(historyPath);
-                Files.write(historyPath, gson.toJson(null).getBytes());
+                Files.write(historyPath, gson.toJson(historys.stream().map(History::toMap).collect(Collectors.toList())).getBytes(Charset.forName("UTF-8")));
             } catch (IOException e) {
                 e.printStackTrace();
                 Bukkit.broadcastMessage(ChatColor.RED + "儲存記錄異常! 請查看後台訊息");
@@ -79,17 +80,18 @@ public class NameData {
             return;
         }
         //讀取所有暱稱
-        names = Lists.newArrayList(new String(Files.readAllBytes(namePath)).split(","));
-
+        names = Lists.newArrayList(new String(Files.readAllBytes(namePath), "UTF-8").split(","));
+        Bukkit.broadcastMessage(ChatColor.GOLD + "成功讀取，暱稱總共數量 " + names.size());
         historys.clear();
         if (!Files.exists(historyPath)) {
             return;
         }
         //讀取抽獎紀錄
-        List<Map<String, Object>> list = gson.fromJson(new String(Files.readAllBytes(historyPath)), List.class);
+        List<Map<String, Object>> list = gson.fromJson(new String(Files.readAllBytes(historyPath), "UTF-8"), List.class);
         historys = list.stream().map(History::new).collect(Collectors.toList());
         //過濾已經抽獎過的暱稱
         historys.stream().flatMap(h -> h.getNames().stream()).forEach(names::remove);
+        Bukkit.broadcastMessage(ChatColor.GOLD + "過濾成功，暱稱剩餘 " + names.size());
     }
 
 }

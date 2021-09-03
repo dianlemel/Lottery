@@ -3,6 +3,7 @@ package me.dian.lottery;
 import com.google.common.collect.Lists;
 import net.minecraft.server.v1_16_R3.ChatComponentText;
 import net.minecraft.server.v1_16_R3.EntityArmorStand;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -22,20 +23,21 @@ public class Display extends EntityArmorStand {
     }
 
     /**
-     *
-     * @param type 顯示種類
+     * @param type  顯示種類
      * @param names 名稱清單
      */
     public static void showName(String type, List<String> names) {
         clear();
         List<Location> loc = BaseData.getNameLocations().get(type);
-        for(int i = 0 ; i < Integer.parseInt(type) && i < names.size() && i < loc.size(); i++){
-            displays.add(new Display(loc.get(i)));
+        for (int i = 0; i < Integer.parseInt(type) && i < names.size() && i < loc.size(); i++) {
+            Display display = new Display(loc.get(i));
+            display.setNameMsg(names.get(i));
+            displays.add(display);
         }
     }
 
-    private Display(Location loc) {
-        super(((CraftWorld) loc.getWorld()).getHandle(), loc.getY() + 0.5, loc.getY(), loc.getZ() + 0.5);
+    public Display(Location loc) {
+        super(((CraftWorld) loc.getWorld()).getHandle(), loc.getX() + 0.5, loc.getY(), loc.getZ() + 0.5);
         //名稱顯示
         setCustomNameVisible(true);
         //底座關掉
@@ -56,7 +58,7 @@ public class Display extends EntityArmorStand {
      * @param msg
      */
     public void setNameMsg(String msg) {
-        setCustomName(new ChatComponentText(BaseData.getNameColor() + msg));
+        setCustomName(new ChatComponentText(BaseData.getNameColor() + ChatColor.BOLD.toString() + msg));
     }
 
 }

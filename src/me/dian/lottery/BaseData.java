@@ -15,6 +15,7 @@ public class BaseData {
     private static Map<String, List<Location>> nameLocations = Maps.newConcurrentMap();
     private static Map<Location, Integer> start = Maps.newConcurrentMap();
     private static ChatColor nameColor;
+    private static int onlyTime;
 
     /**
      * 重新讀取基礎資料
@@ -40,6 +41,7 @@ public class BaseData {
             start.put(toLocation(loc), size);
         });
         nameColor = ChatColor.getByChar(config.getString("NameColor"));
+        onlyTime = config.getInt("OnlyTime");
     }
 
     /**
@@ -52,6 +54,10 @@ public class BaseData {
         String[] v = value.split(",");
         Location loc = new Location(Bukkit.getWorlds().get(0), Integer.parseInt(v[0]), Integer.parseInt(v[1]), Integer.parseInt(v[2]));
         return loc;
+    }
+
+    public static int getOnlyTime() {
+        return onlyTime;
     }
 
     public static Map<String, List<Location>> getNameLocations() {
