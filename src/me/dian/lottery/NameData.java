@@ -45,6 +45,10 @@ public class NameData {
         return select;
     }
 
+    public static List<String> getNames() {
+        return names;
+    }
+
     /**
      * 抽獎名單是否已經空了
      *
