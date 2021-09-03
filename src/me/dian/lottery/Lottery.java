@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
+
 public class Lottery extends JavaPlugin {
 
     private static Lottery plugin;
@@ -22,15 +24,17 @@ public class Lottery extends JavaPlugin {
         Command command = new Command();
         pluginCommand.setExecutor(command);
         pluginCommand.setTabCompleter(command);
-        //處存預設設定檔案
-        saveDefaultConfig();
-        //重新讀取設定檔
-        reloadConfig();
+        BaseData.reload();
+        try {
+            NameData.reload();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onDisable() {
-
+        Display.clear();
     }
 
 }

@@ -27,7 +27,6 @@ public class NameData {
     private static List<History> historys = Lists.newArrayList();
 
     /**
-     *
      * @param size 抽幾個暱稱
      * @return 暱稱清單
      */
@@ -38,15 +37,44 @@ public class NameData {
         for (int i = 0; i < size && !names.isEmpty(); i++) {
             select.add(names.remove(0));
         }
+        if (!select.isEmpty()) {
+            historys.add(new History(names));
+            save();
+        }
         return select;
     }
 
     /**
+     * 抽獎名單是否已經空了
+     *
+     * @return
+     */
+    public static boolean isEmpty() {
+        return names.isEmpty();
+    }
+
+    /**
+     * 異步儲存抽獎紀錄
+     */
+    private static void save() {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(Lottery.getPlugin(), () -> {
+            try {
+                Files.deleteIfExists(historyPath);
+                Files.write(historyPath, gson.toJson(null).getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+                Bukkit.broadcastMessage(ChatColor.RED + "儲存記錄異常! 請查看後台訊息");
+            }
+        }, 0);
+    }
+
+    /**
      * 重新讀取暱稱、紀錄，並且過濾已經抽中過的暱稱
+     *
      * @throws IOException
      */
     public static void reload() throws IOException {
-        if(!Files.exists(namePath)){
+        if (!Files.exists(namePath)) {
             Bukkit.broadcastMessage(ChatColor.RED + "遺失 name.txt 檔案，無法重新讀取資料");
             return;
         }
@@ -54,11 +82,11 @@ public class NameData {
         names = Lists.newArrayList(new String(Files.readAllBytes(namePath)).split(","));
 
         historys.clear();
-        if(!Files.exists(historyPath)){
+        if (!Files.exists(historyPath)) {
             return;
         }
         //讀取抽獎紀錄
-        List<Map<String,Object>> list = gson.fromJson(new String(Files.readAllBytes(historyPath)), List.class);
+        List<Map<String, Object>> list = gson.fromJson(new String(Files.readAllBytes(historyPath)), List.class);
         historys = list.stream().map(History::new).collect(Collectors.toList());
         //過濾已經抽獎過的暱稱
         historys.stream().flatMap(h -> h.getNames().stream()).forEach(names::remove);
