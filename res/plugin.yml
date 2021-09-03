@@ -1,0 +1,9 @@
+name: Lottery
+main: me.dian.lottery.Lottery
+version: 0204
+description: 抽獎機
+api-version: 1.13
+authors: [何學典(HE,XUE-DIAN)]
+commands:
+  lo:
+     description: 基礎指令
