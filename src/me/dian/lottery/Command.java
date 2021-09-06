@@ -36,6 +36,11 @@ public class Command implements CommandExecutor, TabCompleter {
                 case "info":
                     Bukkit.broadcastMessage(ChatColor.AQUA + "暱稱剩餘: " + NameData.getNames().size());
                     return true;
+                case "test":
+                    Player player = (Player) commandSender;
+                    Location loc = player.getLocation();
+                    loc.getWorld().playSound(loc, Sound.BLOCK_END_PORTAL_SPAWN, Float.parseFloat(strings[1]), Float.parseFloat(strings[2]));
+                    return true;
             }
         }
         commandSender.sendMessage(ChatColor.AQUA + "/lo reload 重新讀取基礎設定");

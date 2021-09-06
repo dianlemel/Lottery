@@ -1,9 +1,6 @@
 package me.dian.lottery;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockRedstoneEvent;
 
@@ -56,6 +53,7 @@ public class Listener implements org.bukkit.event.Listener {
             Display.clear();
             time = System.currentTimeMillis();
             loc = BaseData.getNameLocations().get("1").get(0);
+            loc.getWorld().playSound(loc, Sound.BLOCK_PORTAL_TRAVEL,3.0F,0.533F);
         }
 
         @Override
@@ -71,10 +69,11 @@ public class Listener implements org.bukkit.event.Listener {
                     return;
                 case 1:
                     level++;
-                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Lottery.getPlugin(), this, 40);
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Lottery.getPlugin(), this, 50);
                     return;
                 case 2:
                     loc.getWorld().spawnParticle(Particle.TOTEM, loc.clone().add(0.5, 1.3, 0.5), 200);
+                    loc.getWorld().playSound(loc, Sound.BLOCK_END_GATEWAY_SPAWN,3.0F,0.533F);
                     show(1);
                     run = false;
                     return;
