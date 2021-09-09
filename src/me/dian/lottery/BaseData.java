@@ -12,10 +12,18 @@ import java.util.Map;
 
 public class BaseData {
 
-    private static Map<String, List<Location>> nameLocations = Maps.newConcurrentMap();
-    private static Map<Location, Integer> start = Maps.newConcurrentMap();
+    private static final String POSITION = "Position";
+    private static final String DISPLAY_POSITION = "DisplayPosition";
+    private static final String DISPLAY_TYPE = "Type";
+    private static final String BUTTON = "Button";
+    private static final String BUTTON_COUNT = "Count";
+    private static final String NAME_COLOR = "NameColor";
+    private static final String SPECIAL_TIME = "SpecialTime";
+
+    private static Map<Integer, List<Location>> displayPositions = Maps.newConcurrentMap();
+    private static Map<Location, Integer> button = Maps.newConcurrentMap();
     private static ChatColor nameColor;
-    private static int onlyTime;
+    private static int specialTime;
 
     /**
      * 重新讀取基礎資料
@@ -25,25 +33,25 @@ public class BaseData {
         Lottery.getPlugin().saveDefaultConfig();
         //重新讀取設定檔
         Lottery.getPlugin().reloadConfig();
-        nameLocations.clear();
+        displayPositions.clear();
         FileConfiguration config = Lottery.getPlugin().getConfig();
-        config.getMapList("NamePosition").forEach(map -> {
-            String[] types = ((String) map.get("Type")).split(",");
-            String locStr = (String) map.get("Loc");
+        config.getMapList(DISPLAY_POSITION).forEach(map -> {
+            String[] types = ((String) map.get(DISPLAY_TYPE)).split(",");
+            String locStr = (String) map.get(POSITION);
             for (String type : types) {
                 Location loc = toLocation(locStr);
                 loc.getChunk().addPluginChunkTicket(Lottery.getPlugin());
-                nameLocations.computeIfAbsent(type, v -> Lists.newArrayList()).add(loc);
+                displayPositions.computeIfAbsent(Integer.parseInt(type), v -> Lists.newArrayList()).add(loc);
             }
         });
-        start.clear();
-        config.getMapList("Start").forEach(map -> {
-            int size = (int) map.get("Size");
-            String loc = (String) map.get("Loc");
-            start.put(toLocation(loc), size);
+        button.clear();
+        config.getMapList(BUTTON).forEach(map -> {
+            int size = (int) map.get(BUTTON_COUNT);
+            String loc = (String) map.get(POSITION);
+            button.put(toLocation(loc), size);
         });
-        nameColor = ChatColor.getByChar(config.getString("NameColor"));
-        onlyTime = config.getInt("OnlyTime");
+        nameColor = ChatColor.getByChar(config.getString(NAME_COLOR));
+        specialTime = config.getInt(SPECIAL_TIME);
     }
 
     /**
@@ -58,16 +66,16 @@ public class BaseData {
         return loc;
     }
 
-    public static int getOnlyTime() {
-        return onlyTime;
+    public static int getSpecialTime() {
+        return specialTime;
     }
 
-    public static Map<String, List<Location>> getNameLocations() {
-        return nameLocations;
+    public static Map<Integer, List<Location>> getDisplayPositions() {
+        return displayPositions;
     }
 
-    public static Map<Location, Integer> getStart() {
-        return start;
+    public static Map<Location, Integer> getButton() {
+        return button;
     }
 
     public static ChatColor getNameColor() {

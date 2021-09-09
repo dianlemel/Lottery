@@ -1,15 +1,8 @@
 package me.dian.lottery;
 
-import com.google.common.collect.Lists;
 import org.bukkit.*;
-import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockRedstoneEvent;
-import org.bukkit.event.world.ChunkUnloadEvent;
-
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class Listener implements org.bukkit.event.Listener {
 
@@ -26,7 +19,7 @@ public class Listener implements org.bukkit.event.Listener {
         if (event.getNewCurrent() != 15) {
             return;
         }
-        Integer size = BaseData.getStart().get(loc);
+        Integer size = BaseData.getButton().get(loc);
         if (size == null) {
             return;
         }
@@ -47,7 +40,7 @@ public class Listener implements org.bukkit.event.Listener {
     }
 
     private void show(int size) {
-        Display.showName(String.valueOf(size), NameData.getNames(size));
+        Display.showName(size, NameData.getNames(size));
     }
 
     class Special implements Runnable {
@@ -59,7 +52,7 @@ public class Listener implements org.bukkit.event.Listener {
         Special() {
             Display.clear();
             time = System.currentTimeMillis();
-            loc = BaseData.getNameLocations().get("1").get(0);
+            loc = BaseData.getDisplayPositions().get(1).get(0);
             loc.getWorld().playSound(loc, Sound.BLOCK_PORTAL_TRAVEL,3.0F,0.533F);
         }
 
@@ -67,7 +60,7 @@ public class Listener implements org.bukkit.event.Listener {
         public void run() {
             switch (level) {
                 case 0:
-                    if ((System.currentTimeMillis() - time) <= BaseData.getOnlyTime() * 1000) {
+                    if ((System.currentTimeMillis() - time) <= BaseData.getSpecialTime() * 1000) {
                         loc.getWorld().spawnParticle(Particle.PORTAL, loc.clone().add(0.5, 1.3, 0.5), 50);
                     } else {
                         level++;

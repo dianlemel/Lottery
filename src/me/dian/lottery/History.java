@@ -10,6 +10,8 @@ import java.util.Map;
 public class History {
 
     private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final String NAMES = "NAMES";
+    private static final  String CREATE_TIME = "CREATE_TIME";
 
     private String createTime;
     private List<String> names;
@@ -28,14 +30,14 @@ public class History {
     }
 
     public History(Map<String, Object> map) {
-        names = (List<String>) map.get("NAMES");
-        createTime = (String) map.get("CREATE_TIME");
+        names = (List<String>) map.get(NAMES);
+        createTime = (String) map.get(CREATE_TIME);
     }
 
     public Map<String, Object> toMap() {
         Map<String, Object> map = Maps.newConcurrentMap();
-        map.put("CREATE_TIME", createTime);
-        map.put("NAMES", names);
+        map.put(CREATE_TIME, createTime);
+        map.put(NAMES, names);
         return map;
     }
 }

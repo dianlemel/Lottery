@@ -1,30 +1,30 @@
 NameColor: 'f'
-OnlyTime: 5
-NamePosition:
-- Loc: '-38,19,213'
+SpecialTime: 5
+DisplayPosition:
+- Position: '-38,19,213'
   Type: '5,10'
-- Loc: '-36,19,213'
+- Position: '-36,19,213'
   Type: '5,10'
-- Loc: '-34,19,213'
+- Position: '-34,19,213'
   Type: '1,5,10'
-- Loc: '-32,19,213'
+- Position: '-32,19,213'
   Type: '5,10'
-- Loc: '-30,19,213'
+- Position: '-30,19,213'
   Type: '5,10'
-- Loc: '-38,21,213'
+- Position: '-38,21,213'
   Type: '10'
-- Loc: '-36,21,213'
+- Position: '-36,21,213'
   Type: '10'
-- Loc: '-34,21,213'
+- Position: '-34,21,213'
   Type: '10'
-- Loc: '-32,21,213'
+- Position: '-32,21,213'
   Type: '10'
-- Loc: '-30,21,213'
+- Position: '-30,21,213'
   Type: '10'
-Start:
-- Loc: '-35,19,220'
-  Size: 1
-- Loc: '-34,19,220'
-  Size: 5
-- Loc: '-33,19,220'
-  Size: 10
+Button:
+- Position: '-35,19,220'
+  Count: 1
+- Position: '-34,19,220'
+  Count: 5
+- Position: '-33,19,220'
+  Count: 10

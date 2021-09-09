@@ -26,10 +26,10 @@ public class Display extends EntityArmorStand {
      * @param type  顯示種類
      * @param names 名稱清單
      */
-    public static void showName(String type, List<String> names) {
+    public static void showName(int type, List<String> names) {
         clear();
-        List<Location> loc = BaseData.getNameLocations().get(type);
-        for (int i = 0; i < Integer.parseInt(type) && i < names.size() && i < loc.size(); i++) {
+        List<Location> loc = BaseData.getDisplayPositions().get(type);
+        for (int i = 0; i < type && i < names.size() && i < loc.size(); i++) {
             Display display = new Display(loc.get(i));
             display.setNameMsg(names.get(i));
             displays.add(display);
