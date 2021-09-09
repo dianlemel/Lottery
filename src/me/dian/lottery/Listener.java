@@ -1,15 +1,22 @@
 package me.dian.lottery;
 
+import com.google.common.collect.Lists;
 import org.bukkit.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockRedstoneEvent;
+import org.bukkit.event.world.ChunkUnloadEvent;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class Listener implements org.bukkit.event.Listener {
 
     private boolean run = false;
 
     /**
-     * 紅石訊號觸發
+     * 紅石訊號觸發，獲得按鈕的紅石訊號
      *
      * @param event
      */

@@ -29,9 +29,11 @@ public class BaseData {
         FileConfiguration config = Lottery.getPlugin().getConfig();
         config.getMapList("NamePosition").forEach(map -> {
             String[] types = ((String) map.get("Type")).split(",");
-            String loc = (String) map.get("Loc");
+            String locStr = (String) map.get("Loc");
             for (String type : types) {
-                nameLocations.computeIfAbsent(type, v -> Lists.newArrayList()).add(toLocation(loc));
+                Location loc = toLocation(locStr);
+                loc.getChunk().addPluginChunkTicket(Lottery.getPlugin());
+                nameLocations.computeIfAbsent(type, v -> Lists.newArrayList()).add(loc);
             }
         });
         start.clear();
