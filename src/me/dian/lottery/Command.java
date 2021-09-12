@@ -22,7 +22,7 @@ public class Command implements CommandExecutor, TabCompleter {
         if (strings.length != 0) {
             switch (strings[0]) {
                 case "reload":
-                    Lottery.getPlugin().reloadConfig();
+                    BaseData.reload();
                     commandSender.sendMessage(ChatColor.AQUA + "基礎設定重新讀取完成");
                     return true;
                 case "reloadData":
