@@ -39,7 +39,7 @@ public class Command implements CommandExecutor, TabCompleter {
                     Bukkit.broadcastMessage(ChatColor.AQUA + "已清除顯示名稱");
                     return true;
                 case "info":
-                    Bukkit.broadcastMessage(ChatColor.AQUA + "暱稱剩餘: " + NameData.getNames().size());
+                    Bukkit.broadcastMessage(ChatColor.AQUA + "剩餘 " + NameData.getNames().size() + " 尚未抽完");
                     return true;
                 case "delete":
                     NameData.delete();
@@ -49,6 +49,7 @@ public class Command implements CommandExecutor, TabCompleter {
         }
         commandSender.sendMessage(ChatColor.AQUA + "/lo reload 重新讀取基礎設定");
         commandSender.sendMessage(ChatColor.AQUA + "/lo reloadData 重新讀取抽獎名單、紀錄");
+        commandSender.sendMessage(ChatColor.AQUA + "/lo info 顯示剩餘數量");
         commandSender.sendMessage(ChatColor.AQUA + "/lo clear 清除顯示名稱");
         commandSender.sendMessage(ChatColor.AQUA + "/lo delete 清除紀錄");
         return true;
@@ -56,7 +57,7 @@ public class Command implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender commandSender, org.bukkit.command.Command command, String ss, String[] strings) {
-        return Arrays.asList("reload", "reloadData", "clear", "info").stream().filter(s -> s.toLowerCase().startsWith(strings[0].toLowerCase())).collect(Collectors.toList());
+        return Arrays.asList("reload", "reloadData", "clear", "info", "delete").stream().filter(s -> s.toLowerCase().startsWith(strings[0].toLowerCase())).collect(Collectors.toList());
     }
 
 }
