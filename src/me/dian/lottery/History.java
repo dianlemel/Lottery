@@ -11,10 +11,10 @@ public class History {
 
     private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static final String NAMES = "NAMES";
-    private static final  String CREATE_TIME = "CREATE_TIME";
+    private static final String CREATE_TIME = "CREATE_TIME";
 
-    private String createTime;
-    private List<String> names;
+    private final String createTime;
+    private final List<String> names;
 
     public History(List<String> names) {
         this.names = names;

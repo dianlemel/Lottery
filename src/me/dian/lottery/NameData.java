@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 
 public class NameData {
 
-    private static Gson gson = new Gson();
-    private static Path namePath = Paths.get(Lottery.getPlugin().getDataFolder().toString(), "name.txt");
-    private static Path historyPath = Paths.get(Lottery.getPlugin().getDataFolder().toString(), "history.txt");
+    private static final Gson gson = new Gson();
+    private static final Path namePath = Paths.get(Lottery.getPlugin().getDataFolder().toString(), "name.txt");
+    private static final Path historyPath = Paths.get(Lottery.getPlugin().getDataFolder().toString(), "history.txt");
 
     private static List<String> names = Lists.newArrayList();
     private static List<History> historys = Lists.newArrayList();
@@ -68,6 +68,18 @@ public class NameData {
                 Bukkit.broadcastMessage(ChatColor.RED + "儲存記錄異常! 請查看後台訊息");
             }
         }, 0);
+    }
+
+    /**
+     * 清除紀錄、並且刪除紀錄檔案
+     */
+    public static void delete(){
+        try {
+            Files.deleteIfExists(historyPath);
+            historys.clear();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

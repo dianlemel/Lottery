@@ -32,15 +32,21 @@ public class Command implements CommandExecutor, TabCompleter {
                     return true;
                 case "clear":
                     Display.clear();
+                    Bukkit.broadcastMessage(ChatColor.AQUA + "已清除顯示名稱");
                     return true;
                 case "info":
                     Bukkit.broadcastMessage(ChatColor.AQUA + "暱稱剩餘: " + NameData.getNames().size());
+                    return true;
+                case "delete":
+                    NameData.delete();
+                    Bukkit.broadcastMessage(ChatColor.AQUA + "已清除所有紀錄");
                     return true;
             }
         }
         commandSender.sendMessage(ChatColor.AQUA + "/lo reload 重新讀取基礎設定");
         commandSender.sendMessage(ChatColor.AQUA + "/lo reloadData 重新讀取抽獎名單、紀錄");
-        commandSender.sendMessage(ChatColor.AQUA + "/lo clear 清除名稱");
+        commandSender.sendMessage(ChatColor.AQUA + "/lo clear 清除顯示名稱");
+        commandSender.sendMessage(ChatColor.AQUA + "/lo delete 清除紀錄");
         return true;
     }
 

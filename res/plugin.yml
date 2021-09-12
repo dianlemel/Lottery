@@ -1,6 +1,6 @@
 name: Lottery
 main: me.dian.lottery.Lottery
-version: 0204
+version: NEKO%%
 description: 抽獎機
 api-version: 1.13
 authors: [何學典(HE,XUE-DIAN)]
