@@ -6,9 +6,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class BaseData {
 
@@ -41,6 +43,9 @@ public class BaseData {
             for (String type : types) {
                 Location loc = toLocation(locStr);
                 loc.getChunk().addPluginChunkTicket(Lottery.getPlugin());
+                Stream.of(loc.getChunk().getEntities()).filter(Entity::isCustomNameVisible).forEach(e -> {
+                    e.remove();
+                });
                 displayPositions.computeIfAbsent(Integer.parseInt(type), v -> Lists.newArrayList()).add(loc);
             }
         });

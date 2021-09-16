@@ -77,6 +77,7 @@ public class NameData {
         try {
             Files.deleteIfExists(historyPath);
             historys.clear();
+            reload();
         } catch (IOException e) {
             e.printStackTrace();
         }
