@@ -24,7 +24,13 @@ DisplayPosition:
 Button:
 - Position: '-35,19,220'
   Count: 1
+  Special: false
 - Position: '-34,19,220'
   Count: 5
+  Special: false
 - Position: '-33,19,220'
   Count: 10
+  Special: false
+- Position: '-34,19,217'
+  Count: 1
+  Special: true

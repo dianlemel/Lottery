@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 public class BaseData {
 
     private static final String POSITION = "Position";
+    private static final String SPECIAL = "Special";
     private static final String DISPLAY_POSITION = "DisplayPosition";
     private static final String DISPLAY_TYPE = "Type";
     private static final String BUTTON = "Button";
@@ -23,7 +24,7 @@ public class BaseData {
     private static final String SPECIAL_TIME = "SpecialTime";
 
     private static Map<Integer, List<Location>> displayPositions = Maps.newConcurrentMap();
-    private static Map<Location, Integer> button = Maps.newConcurrentMap();
+    private static Map<Location, ButtonData> buttons = Maps.newConcurrentMap();
     private static ChatColor nameColor;
     private static int specialTime;
 
@@ -49,11 +50,9 @@ public class BaseData {
                 displayPositions.computeIfAbsent(Integer.parseInt(type), v -> Lists.newArrayList()).add(loc);
             }
         });
-        button.clear();
-        config.getMapList(BUTTON).forEach(map -> {
-            int size = (int) map.get(BUTTON_COUNT);
-            String loc = (String) map.get(POSITION);
-            button.put(toLocation(loc), size);
+        buttons.clear();
+        config.getMapList(BUTTON).stream().map(ButtonData::new).forEach(dataBtn -> {
+            buttons.put(dataBtn.getLoc(), dataBtn);
         });
         nameColor = ChatColor.getByChar(config.getString(NAME_COLOR));
         specialTime = config.getInt(SPECIAL_TIME);
@@ -79,11 +78,36 @@ public class BaseData {
         return displayPositions;
     }
 
-    public static Map<Location, Integer> getButton() {
-        return button;
+    public static ButtonData getButton(Location loc) {
+        return buttons.get(loc);
     }
 
     public static ChatColor getNameColor() {
         return nameColor;
+    }
+
+    public static class ButtonData {
+
+        private boolean special;
+        private Location loc;
+        private int size;
+
+        private ButtonData(Map<?, ?> map) {
+            size = (int) map.get(BUTTON_COUNT);
+            loc = toLocation((String) map.get(POSITION));
+            special = (boolean) map.get(SPECIAL);
+        }
+
+        public boolean isSpecial() {
+            return special;
+        }
+
+        public Location getLoc() {
+            return loc;
+        }
+
+        public int getSize() {
+            return size;
+        }
     }
 }

@@ -27,7 +27,6 @@ public class Display extends EntityArmorStand {
      * @param names 名稱清單
      */
     public static void showName(int type, List<String> names) {
-        clear();
         List<Location> loc = BaseData.getDisplayPositions().get(type);
         for (int i = 0; i < type && i < names.size() && i < loc.size(); i++) {
             Display display = new Display(loc.get(i));
