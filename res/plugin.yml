@@ -7,3 +7,5 @@ authors: [何學典(HE,XUE-DIAN)]
 commands:
   lo:
      description: 基礎指令
+  head:
+     description: 手上物品放在頭上

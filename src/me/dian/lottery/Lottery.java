@@ -24,6 +24,8 @@ public class Lottery extends JavaPlugin {
         Command command = new Command();
         pluginCommand.setExecutor(command);
         pluginCommand.setTabCompleter(command);
+        Bukkit.getPluginCommand("head").setExecutor(new HeadCommand());
+
         BaseData.reload();
         try {
             NameData.reload();

@@ -15,7 +15,7 @@ public class Command implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
-        if(!commandSender.isOp()){
+        if (!commandSender.isOp()) {
             commandSender.sendMessage(ChatColor.RED + "你沒有該指令的使用權限");
             return true;
         }
