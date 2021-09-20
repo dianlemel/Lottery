@@ -22,15 +22,15 @@ DisplayPosition:
 - Position: '-30,21,213'
   Type: '10'
 Button:
-- Position: '-35,19,220'
+- Position: '-35,19,218'
   Count: 1
   Special: false
-- Position: '-34,19,220'
+- Position: '-34,19,218'
   Count: 5
   Special: false
-- Position: '-33,19,220'
+- Position: '-33,19,218'
   Count: 10
   Special: false
-- Position: '-34,19,217'
+- Position: '-38,19,221'
   Count: 1
   Special: true
