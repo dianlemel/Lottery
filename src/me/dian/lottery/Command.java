@@ -15,17 +15,21 @@ public class Command implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
-        if (!commandSender.isOp()) {
-            commandSender.sendMessage(ChatColor.RED + "你沒有該指令的使用權限");
-            return true;
-        }
         if (strings.length != 0) {
             switch (strings[0]) {
                 case "reload":
+                    if(SpecialEffect.isPlay()){
+                        commandSender.sendMessage(ChatColor.RED + "動畫正在撥放中!");
+                        return true;
+                    }
                     BaseData.reload();
                     commandSender.sendMessage(ChatColor.AQUA + "基礎設定重新讀取完成");
                     return true;
                 case "reloadData":
+                    if(SpecialEffect.isPlay()){
+                        commandSender.sendMessage(ChatColor.RED + "動畫正在撥放中!");
+                        return true;
+                    }
                     try {
                         NameData.reload();
                         commandSender.sendMessage(ChatColor.AQUA + "重新讀取抽獎名單、紀錄");
@@ -35,6 +39,10 @@ public class Command implements CommandExecutor, TabCompleter {
                     }
                     return true;
                 case "clear":
+                    if(SpecialEffect.isPlay()){
+                        commandSender.sendMessage(ChatColor.RED + "動畫正在撥放中!");
+                        return true;
+                    }
                     Display.clear();
                     Bukkit.broadcastMessage(ChatColor.AQUA + "已清除顯示名稱");
                     return true;
@@ -42,6 +50,10 @@ public class Command implements CommandExecutor, TabCompleter {
                     Bukkit.broadcastMessage(ChatColor.AQUA + "剩餘 " + NameData.getNames().size() + " 尚未抽完");
                     return true;
                 case "delete":
+                    if(SpecialEffect.isPlay()){
+                        commandSender.sendMessage(ChatColor.RED + "動畫正在撥放中!");
+                        return true;
+                    }
                     NameData.delete();
                     Bukkit.broadcastMessage(ChatColor.AQUA + "已清除所有紀錄");
                     return true;
